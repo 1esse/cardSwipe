@@ -1,0 +1,40 @@
+<!-- index.wxml -->
+<view class="container">
+  <view class="settings">
+    <text class="label">列表循环：</text>
+    <switch class="setting" data-symbol="loop" bindchange="onSwitch" />
+    <text class="label">过渡动画：</text>
+    <switch class="setting" data-symbol="transition" bindchange="onSwitch" />
+  </view>
+  <view class="settings">
+    <text class="label">卡片总数：</text>
+    <slider class="setting" value="{{cards.length}}" data-symbol="cards" bindchange="onSlide" min="2" max="50" show-value />
+  </view>
+  <view class="settings">
+    <text class="label">展示卡片数：</text>
+    <slider class="setting" value="{{show_cards}}" data-symbol="show_cards" bindchange="onSlide" min="2" max="{{cards.length}}" show-value />
+  </view>
+  <view class="settings">
+    <text class="label">滑出阈值(px)：</text>
+    <slider class="setting" value="{{thershold}}" data-symbol="thershold" bindchange="onSlide" min="1" max="200" show-value />
+  </view>
+  <view class="settings">
+    <text class="label">组件宽度(%)：</text>
+    <slider class="setting" value="{{width}}" data-symbol="width" bindchange="onSlide" min="50" max="100" show-value />
+  </view>
+  <view class="settings">
+    <text class="label">卡片高度(rpx)：</text>
+    <slider class="setting" value="{{height}}" data-symbol="height" bindchange="onSlide" min="200" max="600" show-value />
+  </view>
+  <view class="settings">
+    <text class="label">突出高度(rpx)：</text>
+    <slider class="setting" value="{{up_height}}" data-symbol="up_height" bindchange="onSlide" min="0" max="100" show-value />
+  </view>
+  <view class="settings">
+    <text class="label">收缩力度：</text>
+    <slider class="setting" value="{{scale_ratio * 100}}" data-symbol="scale_ratio" bindchange="onSlide" min="0" max="100" show-value />
+  </view>
+  <view style="width: {{width}}%;">
+    <card-swipe wx:if="{{cards}}" class="component" cards="{{cards}}" show-cards="{{show_cards}}" slide-thershold="{{thershold}}" transition="{{transition}}" scale-ratio="{{scale_ratio}}" circling="{{circle}}" up-height="{{up_height}}" height="{{height}}"></card-swipe>
+  </view>
+</view>

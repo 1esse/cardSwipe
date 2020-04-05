@@ -1,0 +1,11 @@
+<wxs module="cs" src="./cardSwipe.wxs"></wxs>
+<view class="wrapper">
+    <view class="cards" style="height: {{height + showCards * upHeight}}rpx" prop="{{contextWidth}}" change:prop="{{cs.init}}" data-show-cards="{{showCards}}" data-total="{{cards.length}}" data-slide-thershold="{{slideThershold}}">
+        <block wx:for="{{cards}}" wx:for-item="card" wx:key="index">
+            <view wx:if="{{circling ? (index === just_shown ? false : cs.circleRange(index, current_cursor, showCards, cards.length, 'in')) : (index >= current_cursor && index < current_cursor + showCards)}}" class="card {{cs.circleRange(index, current_cursor, showCards, cards.length, 'in') && cs.circleRange(index, current_cursor, showCards, cards.length, 'loc') >= 1 && transition ? 'card-next' : ''}}" style="height: {{height}}rpx; position: absolute; top: {{upHeightpx * cs.circleRange(index, current_cursor, showCards, cards.length, 'loc')}}px; transform: translate3d(0, 0, {{cards_z_index[index]}}px) scale({{1-(scaleRatio*cs.circleRange(index, current_cursor, showCards, cards.length, 'loc'))}});{{transition ? 'transition: all ease 0.2s;' : ''}}" data-current-cursor="{{current_cursor}}" data-card-index="{{index}}" data-card-zindex="{{cards_z_index[index]}}" mut-bind:touchstart="{{cs.touchstart}}" mut-bind:touchmove="{{cs.touchmove}}" mut-bind:touchend="{{cs.touchend}}">
+                <text>{{card.title}}</text>
+                <image src="{{card.src}}" style="width: 100%; height: {{height - 100}}rpx" mode="aspectFit" />
+            </view>
+        </block>
+    </view>
+</view>

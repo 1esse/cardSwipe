@@ -1,0 +1,43 @@
+.wrapper{
+    width: 100%;
+    padding: 20rpx;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.cards{
+    position: relative;
+    width: inherit;
+    display: flex;
+    justify-content: center;
+    padding: 20rpx;
+    box-sizing: border-box;
+    transform-style: preserve-3d;
+}
+
+.card{
+    background-color: #ffffff;
+    width: 100%;
+    padding: 20rpx;
+    box-sizing: border-box;
+    border: 1rpx solid #f9f9f9;
+    box-shadow: 0 2rpx 20rpx #999999;
+    border-radius: 10rpx;
+}
+
+.card-top{
+    width: 100%;
+}
+
+.card-next{
+    animation: fadeIn 0.5s linear;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}

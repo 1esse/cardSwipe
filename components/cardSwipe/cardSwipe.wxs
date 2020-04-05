@@ -1,0 +1,96 @@
+
+var SLIDE_THRESHOLD = 0 // 松手后滑出界面阈值
+var CONTEXT_WIDTH = 0 // 组件宽度
+var instance = {} // 卡片实例
+var startX = 0 // 手指刚接触时屏幕X轴位置
+var moveX = 0 // 移动距离
+var cardIndex = 0 // 滑动卡片的层级索引
+var cardZindex = 0 // 滑动卡片的层级索引
+var currentCursor = 0 // 当前最上层卡片索引
+var lock = false
+
+function init(newp, oldp, ownerinstance, inst) {
+    if (!newp) return
+    CONTEXT_WIDTH = newp
+    instance = inst
+    var dataset = instance.getDataset()
+    total = dataset.total
+    showCards = dataset.showCards
+    SLIDE_THRESHOLD = dataset.slideThershold
+}
+
+function touchstart(event, ownerinstance) {
+    if (lock) return
+    lock = true
+    instance = event.instance
+    var dataset = instance.getDataset()
+    cardIndex = dataset.cardIndex
+    cardZindex = dataset.cardZindex
+    currentCursor = dataset.currentCursor
+    startX = event.touches[0].clientX
+    instance.setStyle({
+        "transition": "unset"
+    })
+}
+
+function touchmove(event, ownerinstance) {
+    if (!lock) return
+    if (!instance || !startX || cardIndex !== currentCursor) {
+        lock = false
+        return
+    }
+    var clientX = event.touches[0].clientX
+    moveX = clientX - startX
+    instance.setStyle({
+        "transition": "unset",
+        "transform": "translate3d(" + moveX + "px, 0, " + cardZindex + "px)",
+    })
+}
+
+function touchend(event, ownerinstance) {
+    if (!lock) return
+    if (cardIndex !== currentCursor) {
+        lock = false
+        return
+    }
+    instance.setStyle({
+        "transform": Math.abs(moveX) < SLIDE_THRESHOLD ?
+            "translate3d(0, 0, " + cardZindex + "px)" :
+            "translate3d(" + (moveX > 0 ? CONTEXT_WIDTH : -CONTEXT_WIDTH) + "px, 0, " + cardZindex + "px)",
+        "transition": "all ease 0.2s",
+    })
+    Math.abs(moveX) >= SLIDE_THRESHOLD && ownerinstance.callMethod('nextCard', {
+        direction: moveX > 0 ? 'right' : 'left'
+    })
+    lock = false
+    startX = 0
+    moveX = 0
+}
+
+function circleRange(index, current_cursor, showCards, total, symbol) {
+    if (showCards > total) return
+    var range = []
+    for (var i = 0; i < total; i++) {
+        range.push(i)
+    }
+    if (current_cursor + showCards <= total) {
+        range = range.slice(current_cursor, current_cursor + showCards)
+    } else {
+        range = range.slice(current_cursor).concat(range.slice(0, current_cursor + showCards - total))
+    }
+    // 判断是要获取卡片在当前显示的范围的索引还是获取卡片是否在该范围索引内
+    switch (symbol) {
+        case 'in':
+            return range.indexOf(index) >= 0
+        case 'loc':
+            return range.indexOf(index)
+    }
+}
+
+module.exports = {
+    init: init,
+    touchstart: touchstart,
+    touchmove: touchmove,
+    touchend: touchend,
+    circleRange: circleRange
+}

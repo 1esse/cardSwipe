@@ -1,0 +1,14 @@
+.settings{
+  display: flex;
+  width: 80%;
+  align-items: center;
+}
+
+.setting{
+  flex: 1;
+}
+
+.label{
+  white-space: nowrap;
+  color: #666666;
+}
