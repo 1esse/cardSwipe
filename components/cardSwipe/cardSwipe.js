@@ -1,3 +1,11 @@
+/*
+ * @Author: jesse zhao 
+ * @Date: 2020-04-07 02:41:53 
+ * @Last Modified by: jesse zhao
+ * @Last Modified time: 2020-04-07 02:44:09
+ * @github: https://github.com/1esse/cardSwipe
+ */
+
 const { rpx2px } = require('../../utils/util')
 Component({
   properties: {

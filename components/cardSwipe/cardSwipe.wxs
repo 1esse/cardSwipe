@@ -1,4 +1,10 @@
-
+/*
+ * @Author: jesse zhao 
+ * @Date: 2020-04-07 02:41:53 
+ * @Last Modified by: jesse zhao
+ * @Last Modified time: 2020-04-07 02:43:44
+ * @github: https://github.com/1esse/cardSwipe
+ */
 var SLIDE_THRESHOLD = 0 // 松手后滑出界面阈值
 var CONTEXT_WIDTH = 0 // 组件宽度
 var instance = {} // 卡片实例
