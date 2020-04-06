@@ -5,7 +5,7 @@ const app = getApp()
 Page({
   data: {
     circle: false,
-    show_cards: 10,
+    show_cards: 3,
     thershold: 60,
     width: 80,
     height: 600,
@@ -55,6 +55,7 @@ Page({
     const { cards } = this.data
     const { symbol } = e.currentTarget.dataset
     switch (symbol) {
+      case 'show_cards':
       case 'width':
       case 'height':
         this.setData({

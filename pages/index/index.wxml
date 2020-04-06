@@ -20,6 +20,10 @@
     <switch class="setting" checked="{{transition}}" data-symbol="transition" bindchange="onSwitch" />
   </view>
   <view class="settings">
+    <text class="label">展示卡片：</text>
+    <slider class="setting" value="{{show_cards}}" data-symbol="show_cards" bindchange="onSlide" min="1" max="{{cards.length}}" show-value />
+  </view>
+  <view class="settings">
     <text class="label">滑出阈值(px)：</text>
     <slider class="setting" value="{{thershold}}" data-symbol="thershold" bindchange="onSlide" min="1" max="200" show-value />
   </view>

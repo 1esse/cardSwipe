@@ -19,6 +19,10 @@ Component({
     cards(nc, oc) {
       if (!nc) return
       this.cardReflect()
+    },
+    showCards(nc, oc) { // 用于展示调节用，在生产环境一般展示卡片数量是固定的。
+      if (!nc) return
+      this.cardReflect()
     }
   },
 
@@ -35,6 +39,7 @@ Component({
     })
     this.getContextWidth()
   },
+
   methods: {
     cardReflect() {
       let { cards, showCards } = this.data
@@ -47,6 +52,7 @@ Component({
         sc: sc
       })
     },
+
     getContextWidth() {
       const query = this.createSelectorQuery()
       query.select('.wrapper').boundingClientRect()
