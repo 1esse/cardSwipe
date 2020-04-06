@@ -20,7 +20,7 @@ Component({
       if (!nc) return
       this.cardReflect()
     },
-    showCards(nc, oc) { // 用于展示调节用，在生产环境一般展示卡片数量是固定的。
+    showCards(nc, oc) { // 用于展示调节用，一般情况下展示卡片数量是固定的，不需要监听变化。
       if (!nc) return
       this.cardReflect()
     }
