@@ -1,18 +1,23 @@
 <!-- index.wxml -->
 <view class="container">
+  <view class="settings" style="display: block;">
+    <view class="label btn-area" data-symbol="add" bind:tap="cardOperate">添加卡片</view>
+    <view class="label btn-area">
+      <view style="white-space: nowrap;">删除卡片</view>
+      <view style="display: flex; flex: 1; overflow-x: scroll;">
+        <block wx:for="{{cards}}" wx:for-item="card" wx:key="index">
+          <view wx:if="{{card}}" class="rm-card {{index === (current_cursor || 0) ? 'disable' : ''}}" data-remove-index="{{index}}" data-symbol="remove" bind:tap="cardOperate">
+            {{index + 1}}
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
   <view class="settings">
     <text class="label">列表循环：</text>
-    <switch class="setting" data-symbol="loop" bindchange="onSwitch" />
+    <switch class="setting" checked="{{circle}}" data-symbol="loop" bindchange="onSwitch" />
     <text class="label">过渡动画：</text>
-    <switch class="setting" data-symbol="transition" bindchange="onSwitch" />
-  </view>
-  <view class="settings">
-    <text class="label">卡片总数：</text>
-    <slider class="setting" value="{{cards.length}}" data-symbol="cards" bindchange="onSlide" min="2" max="50" show-value />
-  </view>
-  <view class="settings">
-    <text class="label">展示卡片数：</text>
-    <slider class="setting" value="{{show_cards}}" data-symbol="show_cards" bindchange="onSlide" min="2" max="{{cards.length}}" show-value />
+    <switch class="setting" checked="{{transition}}" data-symbol="transition" bindchange="onSwitch" />
   </view>
   <view class="settings">
     <text class="label">滑出阈值(px)：</text>
@@ -35,6 +40,6 @@
     <slider class="setting" value="{{scale_ratio * 100}}" data-symbol="scale_ratio" bindchange="onSlide" min="0" max="100" show-value />
   </view>
   <view style="width: {{width}}%;">
-    <card-swipe wx:if="{{cards}}" class="component" cards="{{cards}}" show-cards="{{show_cards}}" slide-thershold="{{thershold}}" transition="{{transition}}" scale-ratio="{{scale_ratio}}" circling="{{circle}}" up-height="{{up_height}}" height="{{height}}"></card-swipe>
+    <card-swipe wx:if="{{cards}}" class="component" bind:cardSwipe="cardSwipe" cards="{{cards}}" removed-cards="{{removed_cards}}" show-cards="{{show_cards}}" slide-thershold="{{thershold}}" transition="{{transition}}" scale-ratio="{{scale_ratio}}" circling="{{circle}}" up-height="{{up_height}}" height="{{height}}"></card-swipe>
   </view>
 </view>

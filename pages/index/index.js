@@ -5,16 +5,17 @@ const app = getApp()
 Page({
   data: {
     circle: false,
-    show_cards: 3,
+    show_cards: 10,
     thershold: 60,
     width: 80,
     height: 600,
     scale_ratio: 0.07,
     up_height: 40,
-    transition: false
+    transition: true,
+    removed_cards: []
   },
   onLoad: function () {
-    this.generateCards(3)
+    this.generateCards(10)
   },
   generateCards(num) {
     const cards = []
@@ -25,11 +26,7 @@ Page({
       })
     }
     this.setData({
-      cards: null
-    }, () => {
-      this.setData({
-        cards: cards
-      })
+      cards: cards
     })
   },
   onSwitch: function (e) {
@@ -39,6 +36,7 @@ Page({
       case 'loop':
         this.setData({
           circle: e.detail.value,
+          current_cursor: cards.findIndex(item => item),
           cards: null
         }, () => {
           this.setData({
@@ -57,10 +55,6 @@ Page({
     const { cards } = this.data
     const { symbol } = e.currentTarget.dataset
     switch (symbol) {
-      case 'cards':
-        this.generateCards(e.detail.value)
-        break
-      case 'show_cards':
       case 'width':
       case 'height':
         this.setData({
@@ -84,5 +78,36 @@ Page({
         })
         break
     }
+  },
+  cardOperate(e) {
+    const { symbol } = e.currentTarget.dataset
+    const { cards } = this.data
+    switch (symbol) {
+      case 'add':
+        this.setData({
+          [`cards[${cards.length}]`]: {
+            title: `新增卡片${cards.length + 1}`,
+            src: `https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302&device=mobile&id=${cards.length + 1}`
+          }
+        })
+        break
+      case 'remove':
+        const { removeIndex } = e.currentTarget.dataset
+        const { removed_cards } = this.data
+        if (removed_cards.includes(parseInt(removeIndex))) return
+        removed_cards.push(parseInt(removeIndex))
+        this.setData({
+          [`cards[${removeIndex}]`]: null,
+          removed_cards
+        })
+        break
+    }
+  },
+  cardSwipe(e) {
+    const { direction, swiped_card_index, current_cursor } = e.detail
+    console.log(e.detail)
+    this.setData({
+      current_cursor
+    })
   }
 })

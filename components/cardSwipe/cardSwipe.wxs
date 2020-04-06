@@ -14,8 +14,6 @@ function init(newp, oldp, ownerinstance, inst) {
     CONTEXT_WIDTH = newp
     instance = inst
     var dataset = instance.getDataset()
-    total = dataset.total
-    showCards = dataset.showCards
     SLIDE_THRESHOLD = dataset.slideThershold
 }
 
@@ -67,18 +65,23 @@ function touchend(event, ownerinstance) {
     moveX = 0
 }
 
-function circleRange(index, current_cursor, showCards, total, symbol) {
-    if (showCards > total) return
+var func_cache = ['key', 'val'] // wxml页多地方调用该函数，使用缓存来缓解压力
+function circleRange(index, current_cursor, showCards, total, removedCards, symbol) {
+    if (showCards > total || current_cursor === undefined) return
+    var key = current_cursor.toString() + showCards.toString() + total.toString() + removedCards.toString()
     var range = []
-    for (var i = 0; i < total; i++) {
-        range.push(i)
+    if (key === func_cache[0]) {
+        range = func_cache[1]
     }
-    if (current_cursor + showCards <= total) {
-        range = range.slice(current_cursor, current_cursor + showCards)
-    } else {
-        range = range.slice(current_cursor).concat(range.slice(0, current_cursor + showCards - total))
+    else {
+        var i = current_cursor
+        while (range.length < showCards) {
+            removedCards.indexOf(i) === -1 && range.push(i)
+            i += 1
+            if (i === total) i = 0
+        }
+        func_cache = [key, range]
     }
-    // 判断是要获取卡片在当前显示的范围的索引还是获取卡片是否在该范围索引内
     switch (symbol) {
         case 'in':
             return range.indexOf(index) >= 0
@@ -87,10 +90,17 @@ function circleRange(index, current_cursor, showCards, total, symbol) {
     }
 }
 
+function getNextRemoves(removedCards, current_cursor) {
+    return removedCards.filter(function (item) {
+        return item > current_cursor
+    })
+}
+
 module.exports = {
     init: init,
     touchstart: touchstart,
     touchmove: touchmove,
     touchend: touchend,
-    circleRange: circleRange
+    circleRange: circleRange,
+    getNextRemoves: getNextRemoves
 }
