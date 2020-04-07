@@ -6,16 +6,16 @@ Page({
   data: {
     circle: false,
     show_cards: 3,
+    rotate_deg: 0,
     thershold: 60,
-    width: 80,
     height: 600,
     scale_ratio: 0.07,
     up_height: 40,
     transition: true,
-    removed_cards: []
+    removed_cards: [],
   },
   onLoad: function () {
-    this.generateCards(10)
+    this.generateCards(5)
   },
   generateCards(num) {
     const cards = []
@@ -26,22 +26,17 @@ Page({
       })
     }
     this.setData({
-      cards: cards
+      cards: cards,
+      current_cursor: cards.findIndex(item => item),
+      removed_cards: []
     })
   },
   onSwitch: function (e) {
-    const { cards } = this.data
     const { symbol } = e.currentTarget.dataset
     switch (symbol) {
       case 'loop':
         this.setData({
-          circle: e.detail.value,
-          current_cursor: cards.findIndex(item => item),
-          cards: null
-        }, () => {
-          this.setData({
-            cards: cards
-          })
+          circle: e.detail.value
         })
         break
       case 'transition':
@@ -52,30 +47,12 @@ Page({
     }
   },
   onSlide: function (e) {
-    const { cards } = this.data
     const { symbol } = e.currentTarget.dataset
     switch (symbol) {
       case 'show_cards':
-      case 'width':
-      case 'height':
+      case 'rotate_deg':
         this.setData({
           [symbol]: e.detail.value
-        })
-        break
-      case 'scale_ratio':
-        this.setData({
-          scale_ratio: e.detail.value / 100
-        })
-        break
-      case 'up_height':
-      case 'thershold':
-        this.setData({
-          cards: null
-        }, () => {
-          this.setData({
-            cards,
-            [symbol]: e.detail.value
-          })
         })
         break
     }
@@ -90,6 +67,13 @@ Page({
             title: `新增卡片${cards.length + 1}`,
             src: `https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302&device=mobile&id=${cards.length + 1}`
           }
+        })
+        break
+      case 'reset':
+        this.setData({
+          cards: null
+        }, () => {
+          this.generateCards(5)
         })
         break
       case 'remove':
@@ -107,6 +91,11 @@ Page({
   cardSwipe(e) {
     const { direction, swiped_card_index, current_cursor } = e.detail
     console.log(e.detail)
+    wx.showToast({
+      title: `卡片${swiped_card_index + 1}向${direction === 'left' ? '左' : '右'}滑`,
+      icon: 'none',
+      duration: 1000
+    })
     this.setData({
       current_cursor
     })

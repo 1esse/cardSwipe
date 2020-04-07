@@ -1,7 +1,11 @@
 <!-- index.wxml -->
 <view class="container">
   <view class="settings" style="display: block;">
-    <view class="label btn-area" data-symbol="add" bind:tap="cardOperate">添加卡片</view>
+    <view class="label btn-area">
+      <text data-symbol="add" bind:tap="cardOperate">添加卡片</text>
+      <text decode="{{true}}">&emsp;</text>
+      <text data-symbol="reset" bind:tap="cardOperate">重置卡片</text>
+    </view>
     <view class="label btn-area">
       <view style="white-space: nowrap;">删除卡片</view>
       <view style="display: flex; flex: 1; overflow-x: scroll;">
@@ -24,26 +28,10 @@
     <slider class="setting" value="{{show_cards}}" data-symbol="show_cards" bindchange="onSlide" min="1" max="{{cards.length}}" show-value />
   </view>
   <view class="settings">
-    <text class="label">滑出阈值(px)：</text>
-    <slider class="setting" value="{{thershold}}" data-symbol="thershold" bindchange="onSlide" min="1" max="200" show-value />
+    <text class="label">旋转角度：</text>
+    <slider class="setting" value="{{rotate_deg}}" data-symbol="rotate_deg" bindchange="onSlide" min="-180" max="180" show-value />
   </view>
-  <view class="settings">
-    <text class="label">组件宽度(%)：</text>
-    <slider class="setting" value="{{width}}" data-symbol="width" bindchange="onSlide" min="50" max="100" show-value />
-  </view>
-  <view class="settings">
-    <text class="label">卡片高度(rpx)：</text>
-    <slider class="setting" value="{{height}}" data-symbol="height" bindchange="onSlide" min="200" max="600" show-value />
-  </view>
-  <view class="settings">
-    <text class="label">突出高度(rpx)：</text>
-    <slider class="setting" value="{{up_height}}" data-symbol="up_height" bindchange="onSlide" min="0" max="100" show-value />
-  </view>
-  <view class="settings">
-    <text class="label">收缩力度：</text>
-    <slider class="setting" value="{{scale_ratio * 100}}" data-symbol="scale_ratio" bindchange="onSlide" min="0" max="100" show-value />
-  </view>
-  <view style="width: {{width}}%;">
-    <card-swipe wx:if="{{cards}}" class="component" bind:cardSwipe="cardSwipe" cards="{{cards}}" removed-cards="{{removed_cards}}" show-cards="{{show_cards}}" slide-thershold="{{thershold}}" transition="{{transition}}" scale-ratio="{{scale_ratio}}" circling="{{circle}}" up-height="{{up_height}}" height="{{height}}"></card-swipe>
+  <view style="width: 100%;">
+    <card-swipe wx:if="{{cards}}" class="component" bind:cardSwipe="cardSwipe" cards="{{cards}}" removed-cards="{{removed_cards}}" show-cards="{{show_cards}}" slide-thershold="{{thershold}}" transition="{{transition}}" scale-ratio="{{scale_ratio}}" circling="{{circle}}" up-height="{{up_height}}" height="{{height}}" rotate-deg="{{rotate_deg}}"></card-swipe>
   </view>
 </view>

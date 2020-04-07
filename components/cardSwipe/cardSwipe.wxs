@@ -2,7 +2,7 @@
  * @Author: jesse zhao 
  * @Date: 2020-04-07 02:41:53 
  * @Last Modified by: jesse zhao
- * @Last Modified time: 2020-04-07 02:43:44
+ * @Last Modified time: 2020-04-07 13:00:00
  * @github: https://github.com/1esse/cardSwipe
  */
 var SLIDE_THRESHOLD = 0 // 松手后滑出界面阈值
@@ -14,24 +14,21 @@ var cardIndex = 0 // 滑动卡片的层级索引
 var cardZindex = 0 // 滑动卡片的层级索引
 var currentCursor = 0 // 当前最上层卡片索引
 var lock = false
-
-function init(newp, oldp, ownerinstance, inst) {
-    if (!newp) return
-    CONTEXT_WIDTH = newp
-    instance = inst
-    var dataset = instance.getDataset()
-    SLIDE_THRESHOLD = dataset.slideThershold
-}
+var ROTATE_DEG = 0 // 移出屏幕过程旋转角度
 
 function touchstart(event, ownerinstance) {
     if (lock) return
     lock = true
     instance = event.instance
     var dataset = instance.getDataset()
+    ROTATE_DEG = dataset.rotateDeg
+    SLIDE_THRESHOLD = dataset.slideThershold
+    CONTEXT_WIDTH = dataset.contextWidth + Math.floor((Math.abs(ROTATE_DEG) % 360) * dataset.contextWidth / 180)
     cardIndex = dataset.cardIndex
     cardZindex = dataset.cardZindex
     currentCursor = dataset.currentCursor
     startX = event.touches[0].clientX
+    if (cardIndex !== currentCursor) return
     instance.setStyle({
         "transition": "unset"
     })
@@ -47,7 +44,7 @@ function touchmove(event, ownerinstance) {
     moveX = clientX - startX
     instance.setStyle({
         "transition": "unset",
-        "transform": "translate3d(" + moveX + "px, 0, " + cardZindex + "px)",
+        "transform": "translate3d(" + moveX + "px, 0, " + cardZindex + "px) rotate(" + ROTATE_DEG / CONTEXT_WIDTH * moveX + "deg)",
     })
 }
 
@@ -60,7 +57,7 @@ function touchend(event, ownerinstance) {
     instance.setStyle({
         "transform": Math.abs(moveX) < SLIDE_THRESHOLD ?
             "translate3d(0, 0, " + cardZindex + "px)" :
-            "translate3d(" + (moveX > 0 ? CONTEXT_WIDTH : -CONTEXT_WIDTH) + "px, 0, " + cardZindex + "px)",
+            "translate3d(" + (moveX > 0 ? CONTEXT_WIDTH : -CONTEXT_WIDTH) + "px, 0, " + cardZindex + "px) rotate(" + (moveX > 0 ? ROTATE_DEG : -ROTATE_DEG) + "deg)",
         "transition": "all ease 0.2s",
     })
     Math.abs(moveX) >= SLIDE_THRESHOLD && ownerinstance.callMethod('nextCard', {
@@ -74,7 +71,7 @@ function touchend(event, ownerinstance) {
 var func_cache = ['key', 'val'] // wxml页多地方调用该函数，使用缓存来缓解压力
 function circleRange(index, current_cursor, showCards, total, removedCards, symbol) {
     if (showCards > total || current_cursor === undefined) return
-    var key = current_cursor.toString() + showCards.toString() + total.toString() + removedCards.toString()
+    var key = [current_cursor, showCards, total, removedCards.toString()].join('|')
     var range = []
     if (key === func_cache[0]) {
         range = func_cache[1]
@@ -96,17 +93,20 @@ function circleRange(index, current_cursor, showCards, total, removedCards, symb
     }
 }
 
-function getNextRemoves(removedCards, current_cursor) {
-    return removedCards.filter(function (item) {
-        return item > current_cursor
-    })
+function getRangeRemoves(removedCards, current_cursor, showCards, total) {
+    var count = 0
+    var i = current_cursor
+    while (count < showCards && i < total) {
+        removedCards.indexOf(i) === -1 && count++
+        i++
+    }
+    return i
 }
 
 module.exports = {
-    init: init,
     touchstart: touchstart,
     touchmove: touchmove,
     touchend: touchend,
     circleRange: circleRange,
-    getNextRemoves: getNextRemoves
+    getRangeRemoves: getRangeRemoves
 }
