@@ -5,12 +5,13 @@ const app = getApp()
 Page({
   data: {
     circle: false,
+    slide_duration: 200,
     show_cards: 3,
     rotate_deg: 0,
     thershold: 60,
-    height: 600,
-    scale_ratio: 0.07,
-    up_height: 40,
+    height: 740,
+    scale_ratio: 0.1,
+    up_height: 80,
     transition: true,
     removed_cards: [],
   },
@@ -22,7 +23,8 @@ Page({
     for (let i = 0; i < num; i++) {
       cards.push({
         title: `卡片${i + 1}`,
-        src: `https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302&device=mobile&id=${i}`
+        src: `https://source.unsplash.com/collection/190727/500x600?id=${i}`,
+        desc: `这是一段卡片${i + 1}的描述。`
       })
     }
     this.setData({
@@ -51,6 +53,7 @@ Page({
     switch (symbol) {
       case 'show_cards':
       case 'rotate_deg':
+      case 'slide_duration':
         this.setData({
           [symbol]: e.detail.value
         })
@@ -65,7 +68,8 @@ Page({
         this.setData({
           [`cards[${cards.length}]`]: {
             title: `新增卡片${cards.length + 1}`,
-            src: `https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302&device=mobile&id=${cards.length + 1}`
+            src: `https://source.unsplash.com/collection/190727/600x600?id=${cards.length + 1}`,
+            desc: `这是一段新增卡片${cards.length + 1}的描述。`
           }
         })
         break

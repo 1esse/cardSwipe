@@ -1,5 +1,8 @@
 <!-- index.wxml -->
 <view class="container">
+  <view style="width: 100%;">
+    <card-swipe wx:if="{{cards}}" class="component" bind:cardSwipe="cardSwipe" cards="{{cards}}" removed-cards="{{removed_cards}}" show-cards="{{show_cards}}" slide-thershold="{{thershold}}" transition="{{transition}}" scale-ratio="{{scale_ratio}}" circling="{{circle}}" up-height="{{up_height}}" height="{{height}}" rotate-deg="{{rotate_deg}}" slide-duration="{{slide_duration}}"></card-swipe>
+  </view>
   <view class="settings" style="display: block;">
     <view class="label btn-area">
       <text data-symbol="add" bind:tap="cardOperate">添加卡片</text>
@@ -31,7 +34,8 @@
     <text class="label">旋转角度：</text>
     <slider class="setting" value="{{rotate_deg}}" data-symbol="rotate_deg" bindchange="onSlide" min="-180" max="180" show-value />
   </view>
-  <view style="width: 100%;">
-    <card-swipe wx:if="{{cards}}" class="component" bind:cardSwipe="cardSwipe" cards="{{cards}}" removed-cards="{{removed_cards}}" show-cards="{{show_cards}}" slide-thershold="{{thershold}}" transition="{{transition}}" scale-ratio="{{scale_ratio}}" circling="{{circle}}" up-height="{{up_height}}" height="{{height}}" rotate-deg="{{rotate_deg}}"></card-swipe>
+  <view class="settings">
+    <text class="label">滑动时长：</text>
+    <slider class="setting" value="{{slide_duration}}" data-symbol="slide_duration" step="100" bindchange="onSlide" min="100" max="2000" show-value />
   </view>
 </view>

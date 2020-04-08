@@ -1,7 +1,8 @@
 .settings{
   display: flex;
   width: 80%;
-  align-items: center;
+  align-items: center; 
+  z-index: 1000;
 }
 
 .setting{

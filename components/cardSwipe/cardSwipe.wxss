@@ -1,6 +1,6 @@
 .wrapper{
     width: 100%;
-    padding: 20rpx;
+    padding: 0 20rpx;
     box-sizing: border-box;
     overflow-x: hidden;
 }
@@ -18,15 +18,25 @@
 .card{
     background-color: #ffffff;
     width: 100%;
-    padding: 20rpx;
     box-sizing: border-box;
     border: 1rpx solid #f9f9f9;
     box-shadow: 0 2rpx 20rpx #999999;
     border-radius: 10rpx;
 }
-
-.card-top{
-    width: 100%;
+.card-info{
+    width: inherit;
+    height: inherit;
+}
+.card-info .top{
+    width: 100%; 
+}
+.card-info .bottom{
+    width: 100%; 
+    padding: 20rpx;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .card-next{

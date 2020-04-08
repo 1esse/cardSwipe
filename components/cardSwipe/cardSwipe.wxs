@@ -2,7 +2,7 @@
  * @Author: jesse zhao 
  * @Date: 2020-04-07 02:41:53 
  * @Last Modified by: jesse zhao
- * @Last Modified time: 2020-04-07 13:00:00
+ * @Last Modified time: 2020-04-08 12:12:24
  * @github: https://github.com/1esse/cardSwipe
  */
 var SLIDE_THRESHOLD = 0 // 松手后滑出界面阈值
@@ -22,6 +22,7 @@ function touchstart(event, ownerinstance) {
     instance = event.instance
     var dataset = instance.getDataset()
     ROTATE_DEG = dataset.rotateDeg
+    SLIDE_DURATION = dataset.slideDuration
     SLIDE_THRESHOLD = dataset.slideThershold
     CONTEXT_WIDTH = dataset.contextWidth + Math.floor((Math.abs(ROTATE_DEG) % 360) * dataset.contextWidth / 180)
     cardIndex = dataset.cardIndex
@@ -29,9 +30,6 @@ function touchstart(event, ownerinstance) {
     currentCursor = dataset.currentCursor
     startX = event.touches[0].clientX
     if (cardIndex !== currentCursor) return
-    instance.setStyle({
-        "transition": "unset"
-    })
 }
 
 function touchmove(event, ownerinstance) {
@@ -58,7 +56,7 @@ function touchend(event, ownerinstance) {
         "transform": Math.abs(moveX) < SLIDE_THRESHOLD ?
             "translate3d(0, 0, " + cardZindex + "px)" :
             "translate3d(" + (moveX > 0 ? CONTEXT_WIDTH : -CONTEXT_WIDTH) + "px, 0, " + cardZindex + "px) rotate(" + (moveX > 0 ? ROTATE_DEG : -ROTATE_DEG) + "deg)",
-        "transition": "all ease 0.2s",
+        "transition": "all ease " + (SLIDE_DURATION / 1000).toString() + "s",
     })
     Math.abs(moveX) >= SLIDE_THRESHOLD && ownerinstance.callMethod('nextCard', {
         direction: moveX > 0 ? 'right' : 'left'
@@ -103,10 +101,15 @@ function getRangeRemoves(removedCards, current_cursor, showCards, total) {
     return i
 }
 
+function pow(num, sc) {
+    return Math.pow(num, sc)
+}
+
 module.exports = {
     touchstart: touchstart,
     touchmove: touchmove,
     touchend: touchend,
     circleRange: circleRange,
-    getRangeRemoves: getRangeRemoves
+    getRangeRemoves: getRangeRemoves,
+    pow: pow
 }

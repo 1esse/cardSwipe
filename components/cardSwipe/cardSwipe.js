@@ -2,7 +2,7 @@
  * @Author: jesse zhao 
  * @Date: 2020-04-07 02:41:53 
  * @Last Modified by: jesse zhao
- * @Last Modified time: 2020-04-07 11:01:40
+ * @Last Modified time: 2020-04-08 11:48:03
  * @github: https://github.com/1esse/cardSwipe
  */
 
@@ -13,6 +13,7 @@ Component({
     removedCards: Array, // 存放已经移除的卡片的索引数据，如果索引填充了其他卡片，需要将该索引移出
     showCards: Number, // 显示几张卡片
     rotateDeg: Number, // 整个滑动过程旋转角度
+    slideDuration: Number, // 手指离开屏幕后滑出界面时长
     slideThershold: Number, // 松手后滑出界面阈值
     transition: Boolean, // 是否开启过渡动画
     circling: Boolean, // 是否列表循环
@@ -73,7 +74,7 @@ Component({
       })
     },
     nextCard(e) {
-      let { current_cursor, just_shown } = this.data
+      let { current_cursor, just_shown, slideDuration } = this.data
       just_shown = current_cursor
       current_cursor = this.countCurrentCursor(current_cursor)
       Object.assign(e, {
@@ -89,7 +90,7 @@ Component({
             current_cursor,
           })
         })
-      }, 200)
+      }, slideDuration)
       this.triggerEvent('cardSwipe', e)
     },
 
