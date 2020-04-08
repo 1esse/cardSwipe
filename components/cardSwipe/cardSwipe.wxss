@@ -1,42 +1,19 @@
 .wrapper{
     width: 100%;
+    height: 100%;
     padding: 0 20rpx;
     box-sizing: border-box;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .cards{
     position: relative;
-    width: inherit;
+    width: 100%;
     display: flex;
     justify-content: center;
     padding: 20rpx;
     box-sizing: border-box;
     transform-style: preserve-3d;
-}
-
-.card{
-    background-color: #ffffff;
-    width: 100%;
-    box-sizing: border-box;
-    border: 1rpx solid #f9f9f9;
-    box-shadow: 0 2rpx 20rpx #999999;
-    border-radius: 10rpx;
-}
-.card-info{
-    width: inherit;
-    height: inherit;
-}
-.card-info .top{
-    width: 100%; 
-}
-.card-info .bottom{
-    width: 100%; 
-    padding: 20rpx;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 }
 
 .card-next{

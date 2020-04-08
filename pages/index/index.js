@@ -4,16 +4,16 @@ const app = getApp()
 
 Page({
   data: {
-    circle: false,
-    slide_duration: 200,
-    show_cards: 3,
-    rotate_deg: 0,
-    thershold: 60,
-    height: 740,
-    scale_ratio: 0.1,
-    up_height: 80,
-    transition: true,
-    removed_cards: [],
+    cards: [], // 卡片数据，一个包含所有卡片对象的数组
+    circling: false, // 是否列表循环
+    slide_duration: 200,// 手指离开屏幕后滑出界面时长，单位(ms)毫秒
+    show_cards: 3,// 显示几张卡片
+    rotate_deg: 0,// 整个滑动过程旋转角度
+    thershold: 60,// 松手后滑出界面阈值，单位px
+    scale_ratio: 0.07,// 下层卡片收缩力度
+    up_height: 40,// 下层卡片下移高度，单位rpx
+    transition: true,//是否开启过渡动画
+    removed_cards: [],// 存放已经移除的卡片的索引数据，如果索引填充了其他卡片，需要将该索引移出
   },
   onLoad: function () {
     this.generateCards(5)
@@ -38,7 +38,7 @@ Page({
     switch (symbol) {
       case 'loop':
         this.setData({
-          circle: e.detail.value
+          circling: e.detail.value
         })
         break
       case 'transition':

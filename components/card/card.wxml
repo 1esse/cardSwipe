@@ -1,0 +1,9 @@
+<view class="card">
+    <view class="top" style="height: 600rpx;">
+        <image lazy-load="{{true}}" src="{{card.src}}" style="width: 100%; height: 100%; border-top-left-radius: 10rpx; border-top-right-radius: 10rpx;" mode="aspectFill" />
+    </view>
+    <view class="bottom" style="height: 140rpx">
+        <text style="font-size: 36rpx; color: #333333;">{{card.title}}</text>
+        <text style="font-size: 28rpx; color: #999999;">{{card.desc}}</text>
+    </view>
+</view>

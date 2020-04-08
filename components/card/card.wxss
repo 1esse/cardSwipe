@@ -1,0 +1,23 @@
+
+.card{
+    width: 100%;
+    height: 740rpx;
+    background-color: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1rpx solid #f9f9f9;
+    box-shadow: 0 2rpx 20rpx #999999;
+    border-radius: 10rpx;
+}
+
+.card .top{
+    width: 100%; 
+}
+.card .bottom{
+    width: 100%; 
+    padding: 20rpx;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

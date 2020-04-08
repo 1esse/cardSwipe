@@ -2,7 +2,7 @@
  * @Author: jesse zhao 
  * @Date: 2020-04-07 02:41:53 
  * @Last Modified by: jesse zhao
- * @Last Modified time: 2020-04-08 12:12:24
+ * @Last Modified time: 2020-04-09 06:49:57
  * @github: https://github.com/1esse/cardSwipe
  */
 var SLIDE_THRESHOLD = 0 // 松手后滑出界面阈值
