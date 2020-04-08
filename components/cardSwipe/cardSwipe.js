@@ -2,7 +2,7 @@
  * @Author: jesse zhao 
  * @Date: 2020-04-07 02:41:53 
  * @Last Modified by: jesse zhao
- * @Last Modified time: 2020-04-09 07:39:24
+ * @Last Modified time: 2020-04-09 07:47:54
  * @github: https://github.com/1esse/cardSwipe
  */
 
@@ -55,7 +55,6 @@ Component({
       let sc = showCards
       if (showCards < 1) sc = 1
       else if (showCards > cards.filter(item => item).length) sc = cards.filter(item => item).length
-      console.log({ sc })
       this.setData({
         current_z_index: new Array(sc).fill(0).map((_, index) => index + 1).reverse(),
         sc: sc
