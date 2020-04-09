@@ -2,7 +2,7 @@
  * @Author: jesse zhao 
  * @Date: 2020-04-07 02:41:53 
  * @Last Modified by: jesse zhao
- * @Last Modified time: 2020-04-09 06:49:57
+ * @Last Modified time: 2020-04-09 08:47:33
  * @github: https://github.com/1esse/cardSwipe
  */
 var SLIDE_THRESHOLD = 0 // 松手后滑出界面阈值
@@ -21,15 +21,18 @@ function touchstart(event, ownerinstance) {
     lock = true
     instance = event.instance
     var dataset = instance.getDataset()
+    cardIndex = dataset.cardIndex
+    currentCursor = dataset.currentCursor
+    if (cardIndex !== currentCursor) {
+        instance = {}
+        return
+    }
     ROTATE_DEG = dataset.rotateDeg
     SLIDE_DURATION = dataset.slideDuration
     SLIDE_THRESHOLD = dataset.slideThershold
     CONTEXT_WIDTH = dataset.contextWidth + Math.floor((Math.abs(ROTATE_DEG) % 360) * dataset.contextWidth / 180)
-    cardIndex = dataset.cardIndex
     cardZindex = dataset.cardZindex
-    currentCursor = dataset.currentCursor
     startX = event.touches[0].clientX
-    if (cardIndex !== currentCursor) return
 }
 
 function touchmove(event, ownerinstance) {
@@ -48,7 +51,7 @@ function touchmove(event, ownerinstance) {
 
 function touchend(event, ownerinstance) {
     if (!lock) return
-    if (cardIndex !== currentCursor) {
+    if (!instance || !moveX || cardIndex !== currentCursor) {
         lock = false
         return
     }

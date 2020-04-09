@@ -2,11 +2,10 @@
  * @Author: jesse zhao 
  * @Date: 2020-04-07 02:41:53 
  * @Last Modified by: jesse zhao
- * @Last Modified time: 2020-04-09 07:47:54
+ * @Last Modified time: 2020-04-09 07:55:06
  * @github: https://github.com/1esse/cardSwipe
  */
 
-const { rpx2px } = require('../../utils/util')
 Component({
   properties: {
     cards: Array, // 卡片数据，一个包含所有卡片对象的数组
@@ -16,7 +15,7 @@ Component({
     slideThershold: Number, // 松手后滑出界面阈值，单位px
     transition: Boolean, // 是否开启过渡动画
     circling: Boolean, // 是否列表循环
-    upHeight: Number, // 下层卡片下移高度，单位rpx
+    upHeight: Number, // 下层卡片下移高度，单位px
     removedCards: Array, // 存放已经移除的卡片的索引数据，如果索引填充了其他卡片，需要将该索引移出
     scaleRatio: { // 下层卡片收缩力度
       type: Number,
@@ -41,9 +40,8 @@ Component({
 
   attached() {
     // 给每张卡片设置层级
-    const { upHeight, cards } = this.data
+    const { cards } = this.data
     this.setData({
-      upHeightpx: rpx2px(upHeight),
       current_cursor: cards.findIndex(item => item)
     })
     this.getContextWidth()
