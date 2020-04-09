@@ -2,7 +2,7 @@
  * @Author: jesse zhao 
  * @Date: 2020-04-07 02:41:53 
  * @Last Modified by: jesse zhao
- * @Last Modified time: 2020-04-09 08:47:33
+ * @Last Modified time: 2020-04-09 08:55:09
  * @github: https://github.com/1esse/cardSwipe
  */
 var SLIDE_THRESHOLD = 0 // 松手后滑出界面阈值
@@ -57,7 +57,8 @@ function touchend(event, ownerinstance) {
     }
     instance.setStyle({
         "transform": Math.abs(moveX) < SLIDE_THRESHOLD ?
-            "translate3d(0, 0, " + cardZindex + "px)" :
+            // 如果小于滑出阈值，放弃setStyle，使用之前的transfrom
+            "translate3d()" :
             "translate3d(" + (moveX > 0 ? CONTEXT_WIDTH : -CONTEXT_WIDTH) + "px, 0, " + cardZindex + "px) rotate(" + (moveX > 0 ? ROTATE_DEG : -ROTATE_DEG) + "deg)",
         "transition": "all ease " + (SLIDE_DURATION / 1000).toString() + "s",
     })
