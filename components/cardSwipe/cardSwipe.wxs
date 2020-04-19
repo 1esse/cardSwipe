@@ -2,7 +2,7 @@
  * @Author: jesse zhao 
  * @Date: 2020-04-07 02:41:53 
  * @Last Modified by: jesse zhao
- * @Last Modified time: 2020-04-09 08:58:51
+ * @Last Modified time: 2020-04-20 00:42:59
  * @github: https://github.com/1esse/cardSwipe
  */
 var SLIDE_THRESHOLD = 0 // 松手后滑出界面阈值
@@ -105,15 +105,10 @@ function getRangeRemoves(removedCards, current_cursor, showCards, total) {
     return i
 }
 
-function pow(num, sc) {
-    return Math.pow(num, sc)
-}
-
 module.exports = {
     touchstart: touchstart,
     touchmove: touchmove,
     touchend: touchend,
     circleRange: circleRange,
-    getRangeRemoves: getRangeRemoves,
-    pow: pow
+    getRangeRemoves: getRangeRemoves
 }
