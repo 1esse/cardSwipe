@@ -2,7 +2,7 @@
 ### 介绍
 此组件是使用原生微信小程序代码开发的一款高性能的卡片滑动组件，无外部依赖，导入即可使用。其主要功能效果类似探探的卡片滑动，支持循环，新增，删除，以及替换卡片。
 
-![卡片展示图](https://upload-images.jianshu.io/upload_images/15358347-27c9da13f7e2271b.gif)
+![卡片展示图](http://p3.pstatp.com/large/pgc-image/9293be49347c4b60b0e928ca76dc8e08)
 
 ### 用法
 ##### 获取：
