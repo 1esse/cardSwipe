@@ -16,7 +16,7 @@ git clone https://github.com/1esse/cardSwipe.git
 - /pages
   - /index
   
-**其中，components文件夹下的card组件是cardSwipe组件的[抽象节点](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/generics.html)，放置卡片内容，需要调用者自己实现。而cardSwipe组件为卡片功能的具体实现。**
+**其中，components文件夹下的card组件是cardSwipe组件的[抽象节点](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/generics.html)，放置卡片内容，需要调用者自己实现。而cardSwipe组件为卡片功能的具体实现。pages下的index为调用组件的页面，可供参考。**
 
 ### 功能介绍
 ##### 亮点：
