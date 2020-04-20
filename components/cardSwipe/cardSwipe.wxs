@@ -2,7 +2,7 @@
  * @Author: jesse zhao 
  * @Date: 2020-04-07 02:41:53 
  * @Last Modified by: jesse zhao
- * @Last Modified time: 2020-04-20 00:42:59
+ * @Last Modified time: 2020-04-20 01:38:33
  * @github: https://github.com/1esse/cardSwipe
  */
 var SLIDE_THRESHOLD = 0 // 松手后滑出界面阈值
@@ -70,22 +70,14 @@ function touchend(event, ownerinstance) {
     moveX = 0
 }
 
-var func_cache = ['key', 'val'] // wxml页多地方调用该函数，使用缓存来缓解压力
 function circleRange(index, current_cursor, showCards, total, removedCards, symbol) {
     if (showCards > total || current_cursor === undefined) return
-    var key = [current_cursor, showCards, total, removedCards.toString()].join('|')
     var range = []
-    if (key === func_cache[0]) {
-        range = func_cache[1]
-    }
-    else {
-        var i = current_cursor
-        while (range.length < showCards) {
-            removedCards.indexOf(i) === -1 && range.push(i)
-            i += 1
-            if (i === total) i = 0
-        }
-        func_cache = [key, range]
+    var i = current_cursor
+    while (range.length < showCards) {
+        removedCards.indexOf(i) === -1 && range.push(i)
+        i += 1
+        if (i === total) i = 0
     }
     switch (symbol) {
         case 'in':

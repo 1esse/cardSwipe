@@ -2,7 +2,7 @@
  * @Author: jesse zhao 
  * @Date: 2020-04-07 02:41:53 
  * @Last Modified by: jesse zhao
- * @Last Modified time: 2020-04-09 12:00:02
+ * @Last Modified time: 2020-04-20 03:13:52
  * @github: https://github.com/1esse/cardSwipe
  */
 
@@ -103,12 +103,12 @@ Component({
     },
 
     countCurrentCursor(current_cursor) {
-      const { circling, cards } = this.data
+      const { circling, cards, removedCards } = this.data
       if (circling) // 如果开启循环
         current_cursor = current_cursor + 1 === cards.length ? 0 : current_cursor + 1
       else
         current_cursor += 1
-      if (cards[current_cursor] !== null) return current_cursor
+      if (!removedCards.includes(current_cursor)) return current_cursor
       return this.countCurrentCursor(current_cursor)
     }
   }
